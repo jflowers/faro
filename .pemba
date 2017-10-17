@@ -76,23 +76,26 @@ esac
 if [[ ! -e "${PEMBA_PATHS_HOME}/.git" ]]; then
   if [[ "${PEMBA_VERSION_TYPE}" == 'branch' ]]; then
 
-    if [[ ! -e "${PATHS_ORGANIZATION_HOME}" ]]; then
-      mkdir "${PATHS_ORGANIZATION_HOME}"
-    fi
-
-    cd "${PATHS_ORGANIZATION_HOME}"
-
-      git clone https://github.com/jflowers/pemba.git
-
-      git checkout tags/"${PEMBA_VERSION}"
-      if [[ $? != 0 ]]; then
-        git checkout "${PEMBA_VERSION}"
+    if [[ ! -e "${PATHS_ORGANIZATION_HOME}/pemba/.git" ]]; then
+      if [[ ! -e "${PATHS_ORGANIZATION_HOME}" ]]; then
+        mkdir "${PATHS_ORGANIZATION_HOME}"
       fi
 
+      cd "${PATHS_ORGANIZATION_HOME}"
+
+        git clone https://github.com/jflowers/pemba.git
+
+        git checkout tags/"${PEMBA_VERSION}"
+        if [[ $? != 0 ]]; then
+          git checkout "${PEMBA_VERSION}"
+        fi
+
+      cd $OLDPWD
+    fi
+
+    if [[ ! -e "${PEMBA_PATHS_HOME}/.git" ]]; then
       sudo ln -s "${PATHS_ORGANIZATION_HOME}/pemba" "${PEMBA_PATHS_HOME}"
-
-    cd $OLDPWD
-
+    fi
   else
 
     cd "${PEMBA_PATHS_PARENT_HOME}"
