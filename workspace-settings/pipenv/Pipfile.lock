@@ -1,0 +1,38 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "83afc907138badd21f3a6a2046c70545b27d4879f1dccdd669e584fbca1ad88c"
+        },
+        "host-environment-markers": {
+            "implementation_name": "cpython",
+            "implementation_version": "0",
+            "os_name": "posix",
+            "platform_machine": "x86_64",
+            "platform_python_implementation": "CPython",
+            "platform_release": "15.3.0",
+            "platform_system": "Darwin",
+            "platform_version": "Darwin Kernel Version 15.3.0: Thu Dec 10 18:40:58 PST 2015; root:xnu-3248.30.4~1/RELEASE_X86_64",
+            "python_full_version": "2.7.14",
+            "python_version": "2.7",
+            "sys_platform": "darwin"
+        },
+        "pipfile-spec": 6,
+        "requires": {},
+        "sources": [
+            {
+                "name": "pypi",
+                "url": "https://pypi.python.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "shovel": {
+            "hashes": [
+                "sha256:b38cae71370865aae6713e29466741958e0b7bbfb238a57b9ebcd2e455de4706"
+            ],
+            "version": "==0.3.0"
+        }
+    },
+    "develop": {}
+}
