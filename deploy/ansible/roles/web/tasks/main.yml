@@ -1,0 +1,5 @@
+---
+- name: create an example directory as a test.
+  win_file:
+    path: "C:\\example2"
+    state: directory

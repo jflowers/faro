@@ -1,0 +1,34 @@
+require "#{ENV['PATHS_PROJECT_DEPLOY_VAGRANT_LIB']}/common.rb"
+
+Vagrant.configure('2') do |master_config|
+
+  master_config.vm.define :web do |config|
+    config.vm.box = 'symbols/windows_2016_docker_core'
+    config.vm.network 'private_network', ip: '10.11.12.101'
+
+    config.vm.communicator = 'winrm'
+    config.vm.guest = :windows
+    config.vm.network :forwarded_port, guest: 3389, host: 3389, id: 'rdp', auto_correct: true
+    config.winrm.password = 'vagrant'
+
+    config.vm.provider 'virtualbox' do |v|
+      v.gui = true
+      v.linked_clone = true
+    end
+
+    config.vm.provision 'ansible' do |ansible|
+      ansible.verbose = 'vvvvvv'
+      ansible.playbook = File.expand_path('playbooks/web.yml', File.dirname(__FILE__))
+
+      ansible.host_vars = {
+        web: {
+          ansible_host: '10.11.12.101',
+          ansible_port: 5985,
+          ansible_winrm_scheme: 'http',
+          ansible_winrm_server_cert_validation: 'ignore'
+        }
+      }
+    end
+  end
+
+end
