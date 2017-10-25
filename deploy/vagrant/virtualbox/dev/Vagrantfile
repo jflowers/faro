@@ -3,7 +3,7 @@ require "#{ENV['PATHS_PROJECT_DEPLOY_VAGRANT_LIB']}/common.rb"
 Vagrant.configure('2') do |master_config|
 
   master_config.vm.define :web do |config|
-    config.vm.box = 'symbols/windows_2016_docker_core'
+    config.vm.box = 'gusztavvargadr/w16s-vs17p'
     config.vm.network 'private_network', ip: '10.11.12.101'
 
     config.vm.communicator = 'winrm'
@@ -12,7 +12,6 @@ Vagrant.configure('2') do |master_config|
     config.winrm.password = 'vagrant'
 
     config.vm.provider 'virtualbox' do |v|
-      v.gui = true
       v.linked_clone = true
     end
 
