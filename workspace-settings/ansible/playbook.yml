@@ -1,7 +1,7 @@
 - hosts: localhost
   connection: local
   tasks:
-    - name: Install VirtualBox
-      homebrew_cask: name=https://raw.githubusercontent.com/caskroom/homebrew-cask/e8816187ae43f52b598f15f45b3453e22727ac99/Casks/virtualbox.rb state=present
+    # - name: Install VirtualBox
+    #   homebrew_cask: name=https://raw.githubusercontent.com/caskroom/homebrew-cask/e8816187ae43f52b598f15f45b3453e22727ac99/Casks/virtualbox.rb state=present
     - name: Install Vagrant
-      homebrew_cask: name=https://raw.githubusercontent.com/caskroom/homebrew-cask/0b8f65f65b9b8d9de0fff7634a2babb7f6b95099/Casks/vagrant.rb state=present
+      homebrew_cask: name=vagrant state=present

@@ -1,0 +1,11 @@
+---
+- hosts: all
+
+  vars:
+    apache_vhosts:
+      - {servername: "lamp", documentroot: "/var/www/html"}
+
+  roles:
+    - linux-playtime
+    - geerlingguy.repo-epel
+    - geerlingguy.apache

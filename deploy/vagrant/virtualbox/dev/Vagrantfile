@@ -1,8 +1,9 @@
 require "#{ENV['PATHS_PROJECT_DEPLOY_VAGRANT_LIB']}/common.rb"
+require 'fileutils'
 
 Vagrant.configure('2') do |master_config|
 
-  master_config.vm.define :web do |config|
+  master_config.vm.define :windows_box do |config|
     config.vm.box = 'gusztavvargadr/w16s-vs17p'
     config.vm.network 'private_network', ip: '10.11.12.101'
 
@@ -16,8 +17,8 @@ Vagrant.configure('2') do |master_config|
     end
 
     config.vm.provision 'ansible' do |ansible|
-      ansible.verbose = 'vvvvvv'
-      ansible.playbook = File.expand_path('playbooks/web.yml', File.dirname(__FILE__))
+      ansible.verbose = 'vvvvv'
+      ansible.playbook = File.expand_path('playbooks/windows.yml', File.dirname(__FILE__))
 
       ansible.host_vars = {
         web: {
@@ -30,4 +31,26 @@ Vagrant.configure('2') do |master_config|
     end
   end
 
+  master_config.vm.define :centos_box do |config|
+    config.vm.box = 'centos/6'
+    config.vm.network 'private_network', ip: '10.11.12.102'
+
+    config.vm.provider 'virtualbox' do |v|
+      v.linked_clone = true
+    end
+
+    config.vm.provision 'ansible' do |ansible|
+      ansible.verbose = 'vvvvv'
+
+      ansible.become = true
+      ansible.become_user = 'root'
+
+      ansible.galaxy_role_file = File.expand_path('playbooks/requirements.yml', File.dirname(__FILE__))
+      ansible.galaxy_roles_path = ENV['PATHS_ORGANIZATION_ANSIBLE_GALAXY_HOME']
+      ansible.playbook = File.expand_path('playbooks/centos.yml', File.dirname(__FILE__))
+
+      # raise ansible.galaxy_roles_path unless File.exist?(ansible.galaxy_roles_path)
+      FileUtils.mkdir_p ansible.galaxy_roles_path unless File.exist?(ansible.galaxy_roles_path)
+    end
+  end
 end

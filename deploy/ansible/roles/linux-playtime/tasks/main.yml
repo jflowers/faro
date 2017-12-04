@@ -1,0 +1,14 @@
+---
+- name: who am i
+  shell: whoami
+  become: yes
+
+- name: create an example directory as a test.
+  file:
+    path: "/example3"
+    state: directory
+
+- name: install selinux python bindings
+  package:
+    name: libselinux-python
+    state: present
